@@ -3567,7 +3567,9 @@ function dismissPwaBanner() {
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/sw.js").catch(err => {
+    navigator.serviceWorker.register("/sw.js?v=2.5").then(reg => {
+      reg.update();
+    }).catch(err => {
       console.log("PWA SW Info:", err);
     });
   });

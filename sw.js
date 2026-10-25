@@ -1,7 +1,7 @@
 /* 
   CyberDash — Service Worker pour PWA & Mode Hors-ligne Léger
 */
-const CACHE_NAME = 'cyberdash-pwa-v2';
+const CACHE_NAME = 'cyberdash-pwa-v3';
 const STATIC_ASSETS = [
   '/',
   '/manifest.json',
