@@ -1,7 +1,7 @@
 /* 
   CyberDash — Service Worker pour PWA & Mode Hors-ligne Léger
 */
-const CACHE_NAME = 'cyberdash-pwa-v1';
+const CACHE_NAME = 'cyberdash-pwa-v2';
 const STATIC_ASSETS = [
   '/',
   '/manifest.json',
@@ -10,12 +10,13 @@ const STATIC_ASSETS = [
 ];
 
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(STATIC_ASSETS).catch(err => {
         console.warn('Pre-caching non-bloquant:', err);
       });
-    }).then(() => self.skipWaiting())
+    })
   );
 });
 
@@ -28,12 +29,9 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Ignorer les requêtes non-GET et les appels API POST
   if (event.request.method !== 'GET') return;
 
-  const url = new URL(event.request.url);
-  
-  // Pour les pages et ressources statiques, stratégie Network-First avec fallback Cache
+  // Stratégie Network-First absolue pour toujours charger la dernière version
   event.respondWith(
     fetch(event.request)
       .then((networkResponse) => {

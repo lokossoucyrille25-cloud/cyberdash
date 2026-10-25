@@ -2253,7 +2253,7 @@
   </button>
   <div class="mobile-brand" onclick="goTo('home')">
     <span class="mobile-logo-icon">🔐</span>
-    <span class="mobile-logo-text">CyberDash</span>
+    <span class="mobile-logo-text">CyberDash <small style="font-size:10px;color:var(--accent2);font-weight:600">v2.5</small></span>
   </div>
   <button onclick="showLandingPage()" style="background:rgba(79,159,255,0.15);border:1px solid rgba(79,159,255,0.3);color:#93c5fd;border-radius:20px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer">
     🌐 Présentation
@@ -2272,7 +2272,7 @@
   <div class="logo">
     <div class="logo-icon">🔐</div>
     <h1>CyberDash</h1>
-    <p>v1.0 — Projet IFRI</p>
+    <p>v2.5 — Sécurité Renforcée (A+)</p>
   </div>
 
   <nav class="nav">
@@ -3107,7 +3107,7 @@
               <tr>
                 <td><strong>En-têtes HTTP de Sécurité</strong></td>
                 <td><span class="rep-badge b-moyen">Partiel (D)</span></td>
-                <td>Absence de <code>Content-Security-Policy</code> et de <code>Strict-Transport-Security (HSTS)</code>. Le serveur expose la bannière <code>Server: Apache/2.4.41</code> facilitant le fingerprinting. Configurer CSP et forcer HSTS max-age=31536000.</td>
+                <td>Absence de <code>Content-Security-Policy</code> et de <code>Strict-Transport-Security (HSTS)</code>. Le serveur expose la bannière <code>Server: Apache/2.4.41</code> facilitant le fingerprinting. Configurer CSP strict sans unsafe-eval et forcer HSTS max-age=63072000.</td>
               </tr>
               <tr>
                 <td><strong>Injection SQL (CWE-89)</strong></td>
@@ -5409,7 +5409,7 @@ const DEFAULT_AUDIT_FINDINGS = [
     gravite: "Élevé",
     graviteClass: "b-eleve",
     cible: "Portail Client SaaS",
-    recommandation: "Déployer une politique CSP stricte et imposer HSTS max-age=31536000 avec includeSubDomains."
+    recommandation: "Déployer une politique CSP stricte (Level 3 sans unsafe-eval) et imposer HSTS max-age=63072000 avec includeSubDomains et preload."
   },
   {
     ref: "F-005",
