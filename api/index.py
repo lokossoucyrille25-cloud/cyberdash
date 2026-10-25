@@ -89,16 +89,21 @@ def serve_static(filename):
 
 @app.after_request
 def apply_security_headers(response):
-    # En-têtes de sécurité HTTP stricts (Grade A+ conforme OWASP / ANSSI)
+    # En-têtes de sécurité HTTP renforcés (Strict CSP Level 3 & HSTS Max)
     response.headers["Content-Security-Policy"] = (
-        "default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; "
-        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; "
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; "
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
         "font-src 'self' data: https://fonts.gstatic.com; "
         "img-src 'self' data: blob: https:; "
-        "frame-ancestors 'self';"
+        "connect-src 'self' https:; "
+        "object-src 'none'; "
+        "base-uri 'self'; "
+        "form-action 'self'; "
+        "frame-ancestors 'self'; "
+        "upgrade-insecure-requests;"
     )
-    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains; preload"
+    response.headers["Strict-Transport-Security"] = "max-age=63072000; includeSubDomains; preload"
     response.headers["X-Frame-Options"] = "SAMEORIGIN"
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
@@ -132,13 +137,13 @@ def audit_headers():
         "Content-Security-Policy": {
             "desc": "Contrôle les ressources autorisées à être chargées (scripts, styles, etc.) pour bloquer XSS et injections.",
             "importance": "Critique",
-            "recommandation": "default-src 'self'; script-src 'self'; frame-ancestors 'self';",
+            "recommandation": "default-src 'self'; script-src 'self'; object-src 'none'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;",
             "categorie": "Injections & XSS",
         },
         "Strict-Transport-Security": {
             "desc": "Force l'usage de HTTPS et empêche le déclassement vers HTTP (attaques SSL-stripping).",
             "importance": "Critique",
-            "recommandation": "max-age=31536000; includeSubDomains; preload",
+            "recommandation": "max-age=63072000; includeSubDomains; preload",
             "categorie": "Chiffrement & Transport",
         },
         "X-Frame-Options": {
@@ -234,16 +239,46 @@ def audit_headers():
 
         for h, meta in headers_cibles.items():
             present = h in recu
+            valeur  = recu.get(h, "—")
             if present:
                 score += 1
+
+            # Diagnostic de durcissement renforcé
+            diagnostic = None
+            if present and h == "Content-Security-Policy":
+                checks = []
+                if "default-src 'self'" in valeur:
+                    checks.append("default-src strict")
+                if "object-src 'none'" in valeur:
+                    checks.append("object-src 'none'")
+                if "'unsafe-eval'" not in valeur:
+                    checks.append("sans unsafe-eval")
+                if "frame-ancestors" in valeur:
+                    checks.append("anti-clickjacking")
+                if "upgrade-insecure-requests" in valeur:
+                    checks.append("upgrade HTTPS")
+                diagnostic = "Durcissement renforcé : " + ", ".join(checks) if checks else "CSP standard"
+            elif present and h == "Strict-Transport-Security":
+                checks = []
+                if "includeSubDomains" in valeur:
+                    checks.append("sous-domaines inclus")
+                if "preload" in valeur:
+                    checks.append("preload éligible")
+                if "63072000" in valeur:
+                    checks.append("durée 2 ans (HSTS Max)")
+                elif "31536000" in valeur:
+                    checks.append("durée 1 an")
+                diagnostic = "Durcissement renforcé : " + ", ".join(checks) if checks else "HSTS standard"
+
             resultats.append({
                 "header":         h,
                 "present":        present,
-                "valeur":         recu.get(h, "—"),
+                "valeur":         valeur,
                 "desc":           meta["desc"],
                 "importance":     meta["importance"],
                 "recommandation": meta["recommandation"],
                 "categorie":      meta["categorie"],
+                "diagnostic":     diagnostic,
             })
 
         critiques_ok = sum(1 for c in critiques_cles if c in recu)
