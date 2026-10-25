@@ -12,6 +12,13 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="CyberDash" />
   <meta name="description" content="Plateforme d'audit technique et gouvernance des systèmes d'information — Web, Réseau, Code, BDD, ISO 27001, COBIT, EBIOS RM" />
+  
+  <!-- En-têtes de Sécurité HTTP Déclarés via Meta -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; frame-ancestors 'self';" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+
   <link rel="manifest" href="/manifest.json" />
   <link rel="icon" type="image/png" sizes="192x192" href="/static/icon-192.png" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>" />
@@ -2452,12 +2459,33 @@
       </div>
       <div class="quick-links">
         <span style="font-size:11px;color:var(--muted)">Exemples :</span>
+        <button class="quick-chip" type="button" style="border-color:var(--accent);color:#93c5fd;font-weight:700" onclick="document.getElementById('headers-url').value=(window.location.origin.startsWith('http') ? window.location.origin : 'http://127.0.0.1:5000');document.getElementById('headers-btn').click();">⚡ Auditer CyberDash (Ce serveur)</button>
         <button class="quick-chip" type="button" onclick="document.getElementById('headers-url').value='https://github.com';document.getElementById('headers-btn').click();">github.com</button>
         <button class="quick-chip" type="button" onclick="document.getElementById('headers-url').value='https://cloudflare.com';document.getElementById('headers-btn').click();">cloudflare.com</button>
         <button class="quick-chip" type="button" onclick="document.getElementById('headers-url').value='https://google.com';document.getElementById('headers-btn').click();">google.com</button>
       </div>
     </div>
     <div class="result-area" id="headers-result"></div>
+
+    <!-- MODÈLES DE CONFIGURATION / REMÉDIATION -->
+    <div class="card" style="margin-top:24px">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+        <div class="card-title" style="margin-bottom:0">MODÈLES DE REMÉDIATION DES EN-TÊTES DE SÉCURITÉ (GRADE A+)</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="quick-chip active" id="tab-hdr-nginx" onclick="switchHeaderRemediation('nginx')">Nginx</button>
+          <button class="quick-chip" id="tab-hdr-apache" onclick="switchHeaderRemediation('apache')">Apache</button>
+          <button class="quick-chip" id="tab-hdr-flask" onclick="switchHeaderRemediation('flask')">Python Flask</button>
+          <button class="quick-chip" id="tab-hdr-vercel" onclick="switchHeaderRemediation('vercel')">Vercel JSON</button>
+        </div>
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:12px">
+        Intégrez cette configuration durcie sur votre serveur pour implémenter immédiatement l'ensemble des 13 en-têtes de sécurité (Content-Security-Policy, HSTS, X-Frame-Options, Permissions-Policy, etc.) et obtenir la note A+ aux audits.
+      </p>
+      <div style="position:relative">
+        <textarea id="header-remediation-code" class="code-editor" style="min-height:160px;font-size:11.5px" readonly></textarea>
+        <button class="btn" onclick="copyHeaderRemediationCode()" style="position:absolute;top:10px;right:10px;padding:6px 12px;font-size:11px">📋 Copier la configuration</button>
+      </div>
+    </div>
   </div>
 
   <!-- SSL -->
@@ -3755,6 +3783,104 @@ document.getElementById("headers-btn").addEventListener("click", async () => {
     out.innerHTML = `<div class="card"><div class="mono-out err">Erreur réseau : ${escapeHtml(e.message)}</div></div>`;
   }
 });
+
+/* ── Remédiation des En-têtes HTTP (Snippets) ── */
+const HEADER_CONFIGS = {
+  nginx: `# Configuration Nginx durcie (Recommandation Grade A+)
+add_header Content-Security-Policy "default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; frame-ancestors 'self';" always;
+add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+add_header X-Frame-Options "SAMEORIGIN" always;
+add_header X-Content-Type-Options "nosniff" always;
+add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
+add_header Cross-Origin-Opener-Policy "same-origin" always;
+add_header Cross-Origin-Embedder-Policy "credentialless" always;
+add_header Cross-Origin-Resource-Policy "same-origin" always;
+add_header X-Permitted-Cross-Domain-Policies "none" always;
+add_header Clear-Site-Data '"cache", "cookies", "storage"' always;
+add_header X-XSS-Protection "1; mode=block" always;
+add_header Cache-Control "no-cache, no-store, must-revalidate" always;
+server_tokens off;`,
+
+  apache: `# Configuration Apache .htaccess / httpd.conf durcie
+Header always set Content-Security-Policy "default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; frame-ancestors 'self';"
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+Header always set X-Frame-Options "SAMEORIGIN"
+Header always set X-Content-Type-Options "nosniff"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+Header always set Cross-Origin-Opener-Policy "same-origin"
+Header always set Cross-Origin-Embedder-Policy "credentialless"
+Header always set Cross-Origin-Resource-Policy "same-origin"
+Header always set X-Permitted-Cross-Domain-Policies "none"
+Header always set Clear-Site-Data '"cache", "cookies", "storage"'
+Header always set X-XSS-Protection "1; mode=block"
+Header always set Cache-Control "no-cache, no-store, must-revalidate"
+ServerSignature Off`,
+
+  flask: `# Configuration Python Flask (@app.after_request)
+@app.after_request
+def apply_security_headers(response):
+    response.headers["Content-Security-Policy"] = "default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; frame-ancestors 'self';"
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains; preload"
+    response.headers["X-Frame-Options"] = "SAMEORIGIN"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+    response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
+    response.headers["Cross-Origin-Embedder-Policy"] = "credentialless"
+    response.headers["Cross-Origin-Resource-Policy"] = "same-origin"
+    response.headers["X-Permitted-Cross-Domain-Policies"] = "none"
+    response.headers["Clear-Site-Data"] = '"cache", "cookies", "storage"'
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers.pop("Server", None)
+    response.headers.pop("X-Powered-By", None)
+    return response`,
+
+  vercel: `// Configuration vercel.json
+{
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Content-Security-Policy", "value": "default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; frame-ancestors 'self';" },
+        { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains; preload" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
+        { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" },
+        { "key": "Cross-Origin-Embedder-Policy", "value": "credentialless" },
+        { "key": "Cross-Origin-Resource-Policy", "value": "same-origin" },
+        { "key": "X-Permitted-Cross-Domain-Policies", "value": "none" },
+        { "key": "Clear-Site-Data", "value": "\\"cache\\", \\"cookies\\", \\"storage\\"" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" },
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+      ]
+    }
+  ]
+}`
+};
+
+function switchHeaderRemediation(type) {
+  const el = document.getElementById("header-remediation-code");
+  if (el) el.value = HEADER_CONFIGS[type] || HEADER_CONFIGS.nginx;
+  ['nginx', 'apache', 'flask', 'vercel'].forEach(t => {
+    const btn = document.getElementById(`tab-hdr-${t}`);
+    if (btn) btn.classList.toggle('active', t === type);
+  });
+}
+
+function copyHeaderRemediationCode() {
+  const el = document.getElementById("header-remediation-code");
+  if (!el) return;
+  navigator.clipboard.writeText(el.value).then(() => {
+    alert("✅ Modèle de configuration des en-têtes copié dans le presse-papier !");
+  }).catch(() => {
+    alert("Impossible de copier automatiquement.");
+  });
+}
 
 /* ── OUTIL 2 : SSL ──────────────────────────── */
 document.getElementById("ssl-btn").addEventListener("click", async () => {
@@ -5615,6 +5741,7 @@ window.addEventListener("DOMContentLoaded", () => {
   initGovernanceSliders();
   initQuiz();
   refreshAuditReportPreview();
+  switchHeaderRemediation('nginx');
 
   // Routage initial : Afficher la page vitrine dédiée par défaut, ou le dashboard si hash #dashboard
   const h = (window.location.hash || "").toLowerCase();

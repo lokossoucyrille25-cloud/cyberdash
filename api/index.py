@@ -87,6 +87,36 @@ def serve_static(filename):
     return "", 404
 
 
+@app.after_request
+def apply_security_headers(response):
+    # En-têtes de sécurité HTTP stricts (Grade A+ conforme OWASP / ANSSI)
+    response.headers["Content-Security-Policy"] = (
+        "default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; "
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; "
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+        "font-src 'self' data: https://fonts.gstatic.com; "
+        "img-src 'self' data: blob: https:; "
+        "frame-ancestors 'self';"
+    )
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains; preload"
+    response.headers["X-Frame-Options"] = "SAMEORIGIN"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+    response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
+    response.headers["Cross-Origin-Embedder-Policy"] = "credentialless"
+    response.headers["Cross-Origin-Resource-Policy"] = "same-origin"
+    response.headers["X-Permitted-Cross-Domain-Policies"] = "none"
+    response.headers["Clear-Site-Data"] = '"cache", "cookies", "storage"'
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+
+    # Masquage des informations d'exposition serveur (Fingerprinting / Information Disclosure)
+    response.headers.pop("Server", None)
+    response.headers.pop("X-Powered-By", None)
+    return response
+
+
 # ══════════════════════════════════════════════
 #  OUTIL 1 — Audit des En-têtes HTTP
 # ══════════════════════════════════════════════
