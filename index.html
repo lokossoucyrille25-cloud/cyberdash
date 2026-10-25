@@ -524,193 +524,527 @@
     .tool-card .tc-name { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 4px; }
     .tool-card .tc-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
 
-    /* ─── ÉCRAN D'ACCUEIL & HERO ACCUEIL ──────────── */
-    .hero-welcome {
-      background: radial-gradient(circle at 85% 15%, rgba(45, 212, 191, 0.12) 0%, transparent 60%),
-                  radial-gradient(circle at 10% 85%, rgba(37, 99, 235, 0.18) 0%, transparent 60%),
-                  linear-gradient(135deg, #0e1628 0%, #111a30 100%);
-      border: 1px solid rgba(79, 159, 255, 0.35);
-      border-radius: 16px;
-      padding: 34px 34px 26px;
-      margin-bottom: 24px;
+    /* ─── CONTENEUR DASHBOARD & PAGE VITRINE À PART ──────────── */
+    body.on-landing {
+      display: block !important;
+      overflow-y: auto !important;
+      background: #070b14 !important;
+    }
+    body.on-landing .dashboard-app {
+      display: none !important;
+    }
+    body.on-landing .mobile-topbar,
+    body.on-landing .mobile-bottom-nav,
+    body.on-landing .sidebar {
+      display: none !important;
+    }
+
+    .dashboard-app {
+      display: flex;
+      width: 100%;
+      min-height: 100vh;
+    }
+
+    /* ─── PAGE D'ACCUEIL VITRINE (Complètement à part) ────────── */
+    .landing-page {
+      width: 100%;
+      min-height: 100vh;
+      background: #070b14;
+      color: var(--text);
+      overflow-x: hidden;
       position: relative;
-      overflow: hidden;
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
     }
-    .hero-welcome::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, #4f9fff, #2dd4bf, #a855f7);
+
+    /* Navbar vitrine */
+    .landing-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 11, 20, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(79, 159, 255, 0.16);
+      padding: 14px 24px;
     }
-    .hero-tag-row {
+    .landing-nav-inner {
+      max-width: 1240px;
+      margin: 0 auto;
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 16px;
     }
-    .hero-status-pill {
+    .landing-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .landing-brand-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #2563eb, #38bdf8);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
+    }
+    .landing-brand-text h1 {
+      font-size: 19px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.3px;
+      line-height: 1.1;
+      margin: 0;
+    }
+    .landing-brand-text p {
+      font-size: 11px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      margin-top: 2px;
+    }
+    .landing-nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .landing-nav-menu a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: color 0.15s;
+    }
+    .landing-nav-menu a:hover {
+      color: var(--accent);
+    }
+    .btn-commencer {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #0284c7 100%);
+      color: #fff !important;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      font-weight: 700;
-      color: #34d399;
-      background: rgba(52, 199, 123, 0.15);
-      border: 1px solid rgba(52, 199, 123, 0.35);
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-family: var(--font-mono);
+      gap: 8px;
+      box-shadow: 0 4px 18px rgba(37, 99, 235, 0.45);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
     }
-    .hero-status-pill .pulse-dot {
+    .btn-commencer:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 26px rgba(37, 99, 235, 0.7);
+      border-color: #93c5fd;
+    }
+    .btn-commencer-lg {
+      padding: 14px 34px;
+      font-size: 16px;
+      border-radius: 10px;
+    }
+
+    /* Landing Hero */
+    .landing-hero-wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 72px 24px 60px;
+      text-align: center;
+      position: relative;
+    }
+    .landing-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(37, 99, 235, 0.12);
+      border: 1px solid rgba(79, 159, 255, 0.3);
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #60a5fa;
+      margin-bottom: 24px;
+      font-family: var(--font-mono);
+      letter-spacing: 0.5px;
+    }
+    .landing-status-badge .dot {
       width: 7px;
       height: 7px;
       background: #34d399;
       border-radius: 50%;
       box-shadow: 0 0 8px #34d399;
-      animation: pulseGlow 1.8s infinite;
     }
-    @keyframes pulseGlow {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.4); opacity: 0.6; }
-    }
-    .hero-title {
-      font-size: 26px;
+    .landing-hero-h1 {
+      font-size: 46px;
       font-weight: 900;
       color: #fff;
-      letter-spacing: -0.5px;
-      line-height: 1.25;
-      margin-bottom: 10px;
+      line-height: 1.15;
+      letter-spacing: -1.2px;
+      max-width: 980px;
+      margin: 0 auto 22px;
     }
-    .hero-subtitle {
-      font-size: 13.5px;
+    .landing-hero-h1 .gradient-text {
+      background: linear-gradient(135deg, #60a5fa 0%, #2dd4bf 50%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .landing-hero-sub {
+      font-size: 16px;
       color: var(--text);
-      line-height: 1.6;
-      max-width: 840px;
-      margin-bottom: 22px;
+      line-height: 1.7;
+      max-width: 880px;
+      margin: 0 auto 36px;
     }
-    .hero-actions {
+    .landing-hero-btns {
       display: flex;
-      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
       flex-wrap: wrap;
-      margin-bottom: 24px;
+      margin-bottom: 56px;
     }
-    .hero-btn-primary {
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      color: #fff;
-      font-weight: 700;
-      font-size: 13px;
-      padding: 10px 18px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.2s;
-    }
-    .hero-btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
-    }
-    .hero-btn-secondary {
+    .landing-btn-ghost {
       background: var(--surface2);
-      color: var(--text);
-      font-weight: 600;
-      font-size: 13px;
-      padding: 10px 16px;
-      border-radius: 8px;
       border: 1px solid var(--border);
+      color: #fff;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 13.5px;
+      font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 8px;
       transition: all 0.2s;
     }
-    .hero-btn-secondary:hover {
-      border-color: var(--accent);
-      color: #fff;
-      transform: translateY(-2px);
-    }
-
-    /* Grille Statistiques Accueil */
-    .hero-stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding-top: 20px;
-    }
-    .hero-stat-card {
-      background: rgba(0, 0, 0, 0.25);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 10px;
-      padding: 12px 14px;
-    }
-    .hero-stat-num {
-      font-size: 22px;
-      font-weight: 800;
-      font-family: var(--font-mono);
-      color: #fff;
-      margin-bottom: 2px;
-    }
-    .hero-stat-lbl {
-      font-size: 11px;
-      color: var(--muted);
-      line-height: 1.35;
-    }
-
-    /* Déroulement de la mission */
-    .methodology-track {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-bottom: 26px;
-    }
-    .method-step {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .method-step:hover {
+    .landing-btn-ghost:hover {
       border-color: var(--accent);
       transform: translateY(-2px);
     }
-    .method-step .step-idx {
-      font-size: 10px;
-      font-family: var(--font-mono);
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 6px;
+
+    /* Key stats bar */
+    .landing-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 24px;
+      background: radial-gradient(circle at 50% 0%, rgba(37,99,235,0.12), transparent 70%),
+                  linear-gradient(135deg, #0e1628 0%, #111a30 100%);
+      border: 1px solid rgba(79, 159, 255, 0.25);
+      border-radius: 16px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
     }
-    .method-step .step-title {
-      font-size: 13px;
-      font-weight: 700;
+    .landing-kpi-item {
+      text-align: center;
+      padding: 10px;
+    }
+    .landing-kpi-num {
+      font-size: 30px;
+      font-weight: 900;
       color: #fff;
+      font-family: var(--font-mono);
       margin-bottom: 4px;
     }
-    .method-step .step-desc {
-      font-size: 11px;
+    .landing-kpi-lbl {
+      font-size: 12px;
       color: var(--muted);
       line-height: 1.4;
     }
 
-    .welcome-banner {
-      background: linear-gradient(135deg, rgba(79,159,255,.12), rgba(45,212,191,.08));
-      border: 1px solid rgba(79,159,255,.2);
+    /* Sections */
+    .landing-section {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+    .landing-sec-header {
+      text-align: center;
+      margin-bottom: 44px;
+    }
+    .landing-sec-tag {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+    .landing-sec-title {
+      font-size: 32px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+    .landing-sec-sub {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 760px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Dual Core: Hard Skills vs Gouvernance */
+    .landing-dual-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .landing-dual-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+    }
+    .landing-dual-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+    }
+    .landing-dual-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+    }
+    .landing-dual-card.technical::before {
+      background: linear-gradient(90deg, #3b82f6, #2dd4bf);
+    }
+    .landing-dual-card.governance::before {
+      background: linear-gradient(90deg, #a855f7, #ec4899);
+    }
+    .dual-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .dual-icon {
+      width: 48px;
+      height: 48px;
       border-radius: 12px;
-      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    .dual-title h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 3px;
+    }
+    .dual-title p {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .dual-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
       margin-bottom: 26px;
     }
-    .welcome-banner h3 {
-      font-size: 18px; font-weight: 800; color: #fff;
+    .dual-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .dual-list li .bullet {
+      color: var(--accent);
+      font-weight: 700;
+      margin-top: 1px;
+    }
+    .dual-list li strong {
+      color: #fff;
+    }
+
+    /* 4 Piliers Grid */
+    .landing-pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .landing-pillar-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .landing-pillar-box:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+    .pillar-box-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .pillar-box-icon {
+      font-size: 26px;
+    }
+    .pillar-box-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .pillar-box-tag {
+      font-size: 10px;
+      font-family: var(--font-mono);
+      color: var(--accent);
+      background: rgba(79, 159, 255, 0.12);
+      border: 1px solid rgba(79, 159, 255, 0.25);
+      padding: 2px 8px;
+      border-radius: 12px;
+      margin-left: auto;
+    }
+    .pillar-box-desc {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 16px;
+    }
+    .pillar-box-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 14px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    /* 4 Phases Track */
+    .landing-phases-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .landing-phase-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .landing-phase-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .landing-phase-num {
+      font-size: 10.5px;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .landing-phase-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
       margin-bottom: 6px;
     }
-    .welcome-banner p { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+    .landing-phase-desc {
+      font-size: 11.5px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Final CTA Banner */
+    .landing-cta-banner {
+      background: radial-gradient(circle at 85% 15%, rgba(45, 212, 191, 0.2) 0%, transparent 60%),
+                  radial-gradient(circle at 15% 85%, rgba(37, 99, 235, 0.25) 0%, transparent 60%),
+                  linear-gradient(135deg, #0e1628 0%, #15223f 100%);
+      border: 1px solid rgba(79, 159, 255, 0.4);
+      border-radius: 20px;
+      padding: 50px 36px;
+      text-align: center;
+      margin: 40px auto 60px;
+      max-width: 1080px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+    }
+    .landing-cta-banner h2 {
+      font-size: 32px;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .landing-cta-banner p {
+      font-size: 14.5px;
+      color: var(--text);
+      max-width: 680px;
+      margin: 0 auto 28px;
+      line-height: 1.6;
+    }
+
+    /* Landing Footer */
+    .landing-footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 32px 24px;
+      background: #050811;
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Responsive Landing */
+    @media (max-width: 900px) {
+      .landing-nav-menu {
+        display: none;
+      }
+      .landing-hero-h1 {
+        font-size: 28px;
+        letter-spacing: -0.5px;
+      }
+      .landing-hero-sub {
+        font-size: 14px;
+      }
+      .landing-kpis {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      .landing-dual-grid {
+        grid-template-columns: 1fr;
+      }
+      .landing-pillars-grid {
+        grid-template-columns: 1fr;
+      }
+      .landing-phases-grid {
+        grid-template-columns: 1fr;
+      }
+      .landing-cta-banner {
+        padding: 32px 20px;
+      }
+      .landing-cta-banner h2 {
+        font-size: 24px;
+      }
+    }
 
     /* ─── NOUVEAUX STYLES AUDITEUR IT ─────────────── */
     .code-editor {
@@ -1505,6 +1839,404 @@
 </head>
 <body>
 
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE D'ACCUEIL / VITRINE DÉDIÉE (Complètement à part)
+══════════════════════════════════════════════════════════════ -->
+<div id="landing-page" class="landing-page">
+  <!-- Navbar Vitrine -->
+  <header class="landing-nav">
+    <div class="landing-nav-inner">
+      <div class="landing-brand" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <div class="landing-brand-icon">🔐</div>
+        <div class="landing-brand-text">
+          <h1>CyberDash</h1>
+          <p>SUITE D'AUDIT IT & CYBERSÉCURITÉ</p>
+        </div>
+      </div>
+
+      <nav class="landing-nav-menu">
+        <a href="#apropos">À Propos</a>
+        <a href="#double-socle">Compétences de l'Auditeur</a>
+        <a href="#piliers">Piliers d'Audit</a>
+        <a href="#methodologie">Méthodologie</a>
+        <a href="#certifications">Certifications</a>
+      </nav>
+
+      <div style="display:flex;align-items:center;gap:10px">
+        <button class="btn-commencer" onclick="enterDashboard('home')">
+          <span>🚀 Commencer</span>
+          <span>➔</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="landing-hero-wrap" id="apropos">
+    <div class="landing-status-badge">
+      <span class="dot"></span>
+      <span>PLATEFORME D'AUDIT DES SI • CONFORME ISO 27001, COBIT & ANSSI EBIOS RM</span>
+    </div>
+
+    <h1 class="landing-hero-h1">
+      L'Excellence Technique et Méthodologique au Service de <span class="gradient-text">l'Auditeur IT</span>
+    </h1>
+
+    <p class="landing-hero-sub">
+      CyberDash est une suite complète conçue pour répondre aux exigences réelles du métier d'auditeur des systèmes d'information. Elle réunit un <strong>socle technique opérationnel de pointe</strong> (reconnaissance réseau, sécurité Web SaaS, analyse de code source SAST, durcissement des bases de données CIS) et la <strong>maîtrise stratégique des cadres de gouvernance</strong> (SMSI ISO/IEC 27001:2022, COBIT 2019, ITIL 4 et méthode ANSSI EBIOS RM).
+    </p>
+
+    <div class="landing-hero-btns">
+      <button class="btn-commencer btn-commencer-lg" onclick="enterDashboard('home')">
+        <span>🚀 Commencer</span>
+        <span>➔</span>
+      </button>
+      <button class="landing-btn-ghost" onclick="enterDashboard('report')">
+        <span>📑</span>
+        <span>Consulter le Rapport d'Audit PDF</span>
+      </button>
+      <button class="landing-btn-ghost" onclick="enterDashboard('headers')">
+        <span>📋</span>
+        <span>Tester les En-têtes HTTP</span>
+      </button>
+    </div>
+
+    <!-- Bannière de Métriques Clés -->
+    <div class="landing-kpis">
+      <div class="landing-kpi-item">
+        <div class="landing-kpi-num" style="color:#60a5fa">15+</div>
+        <div class="landing-kpi-lbl">Modules d'Audit et Outils Spécialisés</div>
+      </div>
+      <div class="landing-kpi-item">
+        <div class="landing-kpi-num" style="color:#2dd4bf">2 Socles</div>
+        <div class="landing-kpi-lbl">Hard Skills Techniques & Gouvernance</div>
+      </div>
+      <div class="landing-kpi-item">
+        <div class="landing-kpi-num" style="color:#a855f7">4 Piliers</div>
+        <div class="landing-kpi-lbl">Web, Réseau, BDD, SMSI & Risques</div>
+      </div>
+      <div class="landing-kpi-item">
+        <div class="landing-kpi-num" style="color:#34d399">PDF A4</div>
+        <div class="landing-kpi-lbl">Restitution d'Audit Prête à Télécharger</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1 : Le Rôle de l'Auditeur IT (Équilibre Hard Skills & Gouvernance) -->
+  <section class="landing-section" id="double-socle">
+    <div class="landing-sec-header">
+      <div class="landing-sec-tag">LE MÉTIER D'AUDITEUR DES SYSTÈMES D'INFORMATION</div>
+      <h2 class="landing-sec-title">L'Équilibre Fondamental de l'Audit IT</h2>
+      <p class="landing-sec-sub">
+        Le métier d'auditeur IT exige un équilibre rigoureux entre une solide base technique, indispensable pour comprendre les vulnérabilités réelles des systèmes évalués, et une parfaite maîtrise des cadres de gouvernance pour aligner les risques sur la stratégie de l'entreprise.
+      </p>
+    </div>
+
+    <div class="landing-dual-grid">
+      <!-- Bloc Technique (Hard Skills) -->
+      <div class="landing-dual-card technical">
+        <div>
+          <div class="dual-header">
+            <div class="dual-icon" style="background:rgba(37,99,235,0.18);color:#60a5fa">🛠️</div>
+            <div class="dual-title">
+              <h3>Compétences Techniques (Hard Skills)</h3>
+              <p>Évaluation concrète et opérationnelle de l'exposition réelle aux cyberattaques</p>
+            </div>
+          </div>
+          <ul class="dual-list">
+            <li>
+              <span class="bullet">▸</span>
+              <div>
+                <strong>Sécurité des infrastructures et réseaux :</strong>
+                Compréhension approfondie des architectures d'entreprise. Interprétation experte des résultats d'outils de cartographie réseau et d'interception de flux (comme Nmap ou Burp Suite) sur des environnements mixtes Windows et distributions Linux (notamment Kali) pour évaluer l'exposition réelle.
+              </div>
+            </li>
+            <li>
+              <span class="bullet">▸</span>
+              <div>
+                <strong>Sécurité des applications web :</strong>
+                L'audit de plateformes SaaS et de portails B2B implique d'analyser les flux applicatifs, d'examiner les en-têtes de sécurité HTTP (CSP, HSTS, X-Frame-Options), de vérifier la robustesse des mécanismes d'authentification et d'identifier les vulnérabilités classiques comme les injections SQL (CWE-89).
+              </div>
+            </li>
+            <li>
+              <span class="bullet">▸</span>
+              <div>
+                <strong>Développement et Scripting :</strong>
+                Capacité à lire, analyser et auditer du code source (C, JavaScript, Python, scripts shell Bash) afin de détecter les failles logiques, de comprendre les algorithmes sous-jacents et d'automatiser la collecte de preuves d'audit.
+              </div>
+            </li>
+            <li>
+              <span class="bullet">▸</span>
+              <div>
+                <strong>Sécurité des bases de données :</strong>
+                Évaluation des SGBD critiques (PostgreSQL, SQL Server). Contrôle des privilèges, durcissement selon les benchmarks CIS, chiffrement au repos (TDE) et en transit (TLS), et vérification de l'intégrité des journaux d'audit (Audit Trail).
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <button class="btn-commencer" onclick="enterDashboard('headers')" style="width:100%;justify-content:center">
+            <span>Tester les Outils Techniques</span>
+            <span>➔</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Bloc Gouvernance & Cadres -->
+      <div class="landing-dual-card governance">
+        <div>
+          <div class="dual-header">
+            <div class="dual-icon" style="background:rgba(168,85,247,0.18);color:#c084fc">⚖️</div>
+            <div class="dual-title">
+              <h3>Gouvernance & Cadres de Référence</h3>
+              <p>Maturité organisationnelle, conformité réglementaire et gestion des risques</p>
+            </div>
+          </div>
+          <ul class="dual-list">
+            <li>
+              <span class="bullet">▸</span>
+              <div>
+                <strong>SMSI ISO/IEC 27001:2022 :</strong>
+                Évaluation exhaustive de conformité des 93 contrôles de sécurité de l'Annexe A répartis sur les 4 thématiques fondamentales : mesures organisationnelles, personnes, sécurité physique et mesures technologiques.
+              </div>
+            </li>
+            <li>
+              <span class="bullet">▸</span>
+              <div>
+                <strong>Cadres COBIT 2019 & ITIL 4 :</strong>
+                Mesure de la maturité des processus informatiques selon l'échelle CMMI (niveaux 0 à 5). Alignement stratégique entre IT et objectifs métiers, gestion du cycle de vie des incidents, des changements et continuité opérationnelle.
+              </div>
+            </li>
+            <li>
+              <span class="bullet">▸</span>
+              <div>
+                <strong>Méthode de Gestion des Risques EBIOS RM :</strong>
+                Application de la méthodologie officielle de l'ANSSI en ateliers : identification des événements redoutés, cartographie des actifs primaires et de support, évaluation Gravité x Vraisemblance et plans de traitement.
+              </div>
+            </li>
+            <li>
+              <span class="bullet">▸</span>
+              <div>
+                <strong>Référentiel Métier & Certifications Phares :</strong>
+                Présentation des compétences certifiées les plus demandées sur le marché (CISA d'ISACA, CISSP, Lead Auditor ISO 27001, CEH) assorties d'un simulateur de QCM d'entraînement interactif avec corrigé justifié.
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <button class="btn-commencer" onclick="enterDashboard('iso27001')" style="width:100%;justify-content:center;background:linear-gradient(135deg, #7c3aed, #4f46e5)">
+            <span>Explorer les Modules de Gouvernance</span>
+            <span>➔</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2 : Les 4 Piliers Fondamentaux de CyberDash -->
+  <section class="landing-section" id="piliers" style="background:rgba(255,255,255,0.015);border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05)">
+    <div class="landing-sec-header">
+      <div class="landing-sec-tag">ARCHITECTURE DE LA SOLUTION</div>
+      <h2 class="landing-sec-title">Les 4 Piliers d'Audit de CyberDash</h2>
+      <p class="landing-sec-sub">
+        Chaque pilier regroupe un ensemble d'outils interactifs permettant d'auditer un sous-système critique de l'organisation.
+      </p>
+    </div>
+
+    <div class="landing-pillars-grid">
+      <!-- Pilier 1 -->
+      <div class="landing-pillar-box" onclick="enterDashboard('headers')">
+        <div>
+          <div class="pillar-box-top">
+            <span class="pillar-box-icon">🌐</span>
+            <span class="pillar-box-title">Pilier 1 : Hard Skills & Sécurité Web</span>
+            <span class="pillar-box-tag">TECHNIQUE</span>
+          </div>
+          <div class="pillar-box-desc">
+            Analyse des en-têtes HTTP de sécurité (13 headers analysés en direct), détection des failles d'injection SQL (CWE-89) et mécanismes d'authentification sur plateformes SaaS, analyse statique de code SAST (C, JS, Python, Bash) et vérification des certificats SSL/TLS.
+          </div>
+        </div>
+        <div class="pillar-box-footer">
+          <span>Outils : Headers, SQLi, Code SAST, SSL</span>
+          <span>Commencer ➔</span>
+        </div>
+      </div>
+
+      <!-- Pilier 2 -->
+      <div class="landing-pillar-box" onclick="enterDashboard('nmap')">
+        <div>
+          <div class="pillar-box-top">
+            <span class="pillar-box-icon">🛡️</span>
+            <span class="pillar-box-title">Pilier 2 : Réseau & Bases de Données</span>
+            <span class="pillar-box-tag">INFRASTRUCTURE</span>
+          </div>
+          <div class="pillar-box-desc">
+            Interprétation de cartographies réseau Nmap et requêtes interceptées Burp Suite sur environnements Windows et Linux/Kali. Scanner de ports, audit de durcissement CIS des bases de données PostgreSQL & SQL Server, chiffrement TLS/TDE et journaux d'audit.
+          </div>
+        </div>
+        <div class="pillar-box-footer">
+          <span>Outils : Nmap, Burp, Scan Ports, CIS BDD</span>
+          <span>Commencer ➔</span>
+        </div>
+      </div>
+
+      <!-- Pilier 3 -->
+      <div class="landing-pillar-box" onclick="enterDashboard('iso27001')">
+        <div>
+          <div class="pillar-box-top">
+            <span class="pillar-box-icon">⚖️</span>
+            <span class="pillar-box-title">Pilier 3 : Gouvernance, SMSI & Risques</span>
+            <span class="pillar-box-tag">CONFORMITÉ</span>
+          </div>
+          <div class="pillar-box-desc">
+            Checklist interactive des 93 contrôles ISO/IEC 27001:2022 (Annexe A), matrice d'évaluation de maturité CMMI COBIT 2019 & ITIL 4, et atelier d'analyse des risques cyber selon la méthode officielle de l'ANSSI EBIOS RM.
+          </div>
+        </div>
+        <div class="pillar-box-footer">
+          <span>Outils : ISO 27001, COBIT/ITIL, EBIOS RM</span>
+          <span>Commencer ➔</span>
+        </div>
+      </div>
+
+      <!-- Pilier 4 -->
+      <div class="landing-pillar-box" onclick="enterDashboard('report')" style="border-color:rgba(79,159,255,0.4)">
+        <div>
+          <div class="pillar-box-top">
+            <span class="pillar-box-icon">📑</span>
+            <span class="pillar-box-title">Pilier 4 : Restitution & Rapport d'Audit PDF</span>
+            <span class="pillar-box-tag" style="color:#60a5fa;border-color:rgba(96,165,250,0.4)">LIVRABLE OFFICIEL</span>
+          </div>
+          <div class="pillar-box-desc">
+            Agrégation automatique de l'ensemble des constats techniques et de conformité récoltés durant la mission. Génération instantanée d'un rapport professionnel structuré, classé par priorité P0/P1/P2, avec formalisme de signature et téléchargement PDF A4.
+          </div>
+        </div>
+        <div class="pillar-box-footer">
+          <span>Format : Synthèse A4 certifiée conforme</span>
+          <span>Générer le PDF ➔</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3 : Méthodologie d'une Mission d'Audit IT -->
+  <section class="landing-section" id="methodologie">
+    <div class="landing-sec-header">
+      <div class="landing-sec-tag">CYCLE DE VIE OPÉRATIONNEL</div>
+      <h2 class="landing-sec-title">Le Déroulement d'une Mission d'Audit IT</h2>
+      <p class="landing-sec-sub">
+        CyberDash accompagne l'auditeur à chaque étape de la mission, depuis la reconnaissance initiale jusqu'à la remise du livrable final.
+      </p>
+    </div>
+
+    <div class="landing-phases-grid">
+      <div class="landing-phase-card" onclick="enterDashboard('headers')">
+        <div class="landing-phase-num">PHASE 01</div>
+        <div class="landing-phase-title">🌐 Cadrage & Reconnaissance</div>
+        <div class="landing-phase-desc">
+          Audit des en-têtes HTTP publics, scan de ports ouverts, vérification de la validité TLS/SSL et cartographie réseau Nmap / Burp Suite.
+        </div>
+      </div>
+
+      <div class="landing-phase-card" onclick="enterDashboard('sqli')">
+        <div class="landing-phase-num">PHASE 02</div>
+        <div class="landing-phase-title">🛠️ Vérifications Techniques</div>
+        <div class="landing-phase-desc">
+          Évaluation des faiblesses d'authentification et injection SQL, audit statique de code source SAST et checklist de durcissement CIS des SGBD.
+        </div>
+      </div>
+
+      <div class="landing-phase-card" onclick="enterDashboard('iso27001')">
+        <div class="landing-phase-num">PHASE 03</div>
+        <div class="landing-phase-title">⚖️ Gouvernance & Risques</div>
+        <div class="landing-phase-desc">
+          Audit de conformité de l'Annexe A ISO 27001, évaluation des niveaux de maturité CMMI COBIT/ITIL et cartographie EBIOS RM des risques majeurs.
+        </div>
+      </div>
+
+      <div class="landing-phase-card" onclick="enterDashboard('report')">
+        <div class="landing-phase-num">PHASE 04</div>
+        <div class="landing-phase-title">📑 Restitution & Rapport PDF</div>
+        <div class="landing-phase-desc">
+          Consolidation de tous les constats identifiés, formalisation de la feuille de route P0/P1/P2 et édition du rapport d'audit officiel certifié.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4 : Certifications Métier (CISA, CISSP, Lead Auditor) -->
+  <section class="landing-section" id="certifications" style="background:rgba(255,255,255,0.015);border-top:1px solid rgba(255,255,255,0.05)">
+    <div class="landing-sec-header">
+      <div class="landing-sec-tag">EXCELLENCE PROFESSIONNELLE</div>
+      <h2 class="landing-sec-title">Certifications Phares & Simulateur QCM CISA</h2>
+      <p class="landing-sec-sub">
+        Découvrez les certifications les plus valorisées par les cabinets d'audit internationaux (Big 4) et testez vos connaissances avec le simulateur d'examen CISA intégré.
+      </p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:16px;margin-bottom:30px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px">
+        <div style="font-size:20px;margin-bottom:8px">🎓 <strong style="color:#fff">CISA (ISACA)</strong></div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5">
+          Certified Information Systems Auditor : le standard mondial absolu pour l'audit, le contrôle et l'assurance des SI.
+        </div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px">
+        <div style="font-size:20px;margin-bottom:8px">🛡️ <strong style="color:#fff">CISSP ((ISC)²)</strong></div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5">
+          Certified Information Systems Security Professional : référence managériale couvrant 8 domaines critiques de la cybersécurité.
+        </div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px">
+        <div style="font-size:20px;margin-bottom:8px">📜 <strong style="color:#fff">ISO 27001 Lead Auditor</strong></div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5">
+          Certification officielle pour conduire des audits de certification tierce partie selon les normes ISO 19011 et ISO 27001.
+        </div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px">
+        <div style="font-size:20px;margin-bottom:8px">⚡ <strong style="color:#fff">CEH (EC-Council)</strong></div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5">
+          Certified Ethical Hacker : compétences techniques d'intrusion offensive pour mieux évaluer et auditer les défenses.
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center">
+      <button class="btn-commencer" onclick="enterDashboard('certifications')">
+        <span>Lancer le Simulateur QCM CISA</span>
+        <span>➔</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Bannière d'Appel à l'Action Final (CTA) -->
+  <div class="landing-cta-banner">
+    <h2>Prêt à Réaliser Vos Audits Informatiques ?</h2>
+    <p>
+      Accédez dès maintenant à la suite complète CyberDash pour auditer vos cibles web, analyser vos réseaux, évaluer votre gouvernance ISO 27001 et exporter vos rapports certifiés en PDF.
+    </p>
+    <button class="btn-commencer btn-commencer-lg" onclick="enterDashboard('home')">
+      <span>🚀 Commencer</span>
+      <span>➔</span>
+    </button>
+  </div>
+
+  <!-- Footer Vitrine -->
+  <footer class="landing-footer">
+    <div style="margin-bottom:10px;font-weight:700;color:#fff">
+      🔐 CyberDash — Suite d'Audit des Systèmes d'Information & Cybersécurité
+    </div>
+    <div>Projet académique IFRI • Développé pour auditeurs IT, RSSI et professionnels du contrôle interne.</div>
+    <div style="color:var(--muted);font-size:11px;margin-top:6px">
+      ⚠️ Usage éducatif et professionnel autorisé uniquement. Veillez à auditer exclusivement les systèmes dont vous possédez le mandat formel.
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     APPLICATION DASHBOARD OPÉRATIONNELLE (Masquée par défaut)
+══════════════════════════════════════════════════════════════ -->
+<div id="dashboard-app" class="dashboard-app" style="display:none">
+
 <!-- Barre Mobile Supérieure (visible <= 900px) -->
 <header class="mobile-topbar" id="mobile-topbar">
   <button class="mobile-menu-btn" id="mobile-menu-toggle" onclick="toggleMobileSidebar()" aria-label="Menu de navigation">
@@ -1516,7 +2248,9 @@
     <span class="mobile-logo-icon">🔐</span>
     <span class="mobile-logo-text">CyberDash</span>
   </div>
-  <div class="mobile-panel-indicator" id="mobile-panel-indicator">Accueil</div>
+  <button onclick="showLandingPage()" style="background:rgba(79,159,255,0.15);border:1px solid rgba(79,159,255,0.3);color:#93c5fd;border-radius:20px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer">
+    🌐 Présentation
+  </button>
 </header>
 
 <!-- Voile d'obscurcissement pour tiroir mobile -->
@@ -1535,9 +2269,13 @@
   </div>
 
   <nav class="nav">
+    <div class="nav-item" onclick="showLandingPage()" style="margin:0 12px 14px 12px;background:rgba(79,159,255,0.12);border:1px solid rgba(79,159,255,0.3);color:#93c5fd;border-radius:8px;padding:10px 14px;font-weight:700">
+      <span class="icon">🌐</span> Présentation / Accueil
+    </div>
+
     <div class="nav-label">TABLEAU DE BORD</div>
     <div class="nav-item active" data-panel="home">
-      <span class="icon">🏠</span> Accueil
+      <span class="icon">🏠</span> Accueil Dashboard
     </div>
 
     <div class="nav-label" style="margin-top:14px">HARD SKILLS TECHNIQUES</div>
@@ -1603,9 +2341,14 @@
 
   <!-- ACCUEIL -->
   <div class="panel active" id="panel-home">
-    <div class="page-header">
-      <h2>Tableau de Bord de l'Auditeur IT</h2>
-      <p>Équilibre entre socle technique opérationnel (Hard Skills) et maîtrise des cadres de gouvernance & méthodologies</p>
+    <div class="page-header" style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px">
+      <div>
+        <h2>Tableau de Bord Opérationnel de l'Auditeur IT</h2>
+        <p>Sélectionnez un outil technique ou un module de gouvernance pour exécuter vos vérifications</p>
+      </div>
+      <button class="btn" onclick="showLandingPage()" style="display:inline-flex;align-items:center;gap:8px;font-size:12px;padding:9px 16px;background:var(--surface2);border:1px solid var(--border);color:#fff">
+        <span>🌐</span> Page de Présentation
+      </button>
     </div>
 
     <!-- Bannière PWA Installation Mobile (affichée sur mobile/navigateur compatible) -->
@@ -1620,97 +2363,6 @@
       <div style="display:flex;gap:8px">
         <button class="btn" id="pwa-install-btn" onclick="installPwa()" style="padding:8px 14px;font-size:12px;font-weight:700;background:var(--accent);color:#fff">Installer</button>
         <button class="quick-chip" onclick="dismissPwaBanner()" style="padding:8px 12px;font-size:12px">Ignorer</button>
-      </div>
-    </div>
-
-    <!-- ÉCRAN D'ACCUEIL / HERO LANDING HUB -->
-    <div class="hero-welcome">
-      <div class="hero-tag-row">
-        <div class="hero-status-pill">
-          <span class="pulse-dot"></span>
-          <span>SYSTÈME EN LIGNE • WEB & MOBILE PWA • VERCEL CLOUD READY</span>
-        </div>
-        <span class="badge" style="background:rgba(240,165,0,0.18);color:#f59e0b;font-weight:700">TLP:AMBER | USAGE PROFESSIONNEL & ÉDUCATIF</span>
-      </div>
-
-      <h1 class="hero-title">
-        CyberDash — Suite d'Audit des Systèmes d'Information & Cybersécurité
-      </h1>
-      <p class="hero-subtitle">
-        Plateforme d'audit unifiant la rigueur technique opérationnelle (sécurité Web SaaS, reconnaissance réseau Nmap & Burp Suite, analyse statique de code SAST, durcissement des bases de données CIS) et la maîtrise des cadres internationaux de gouvernance (SMSI ISO/IEC 27001:2022, COBIT 2019, ITIL 4 et méthode ANSSI EBIOS RM).
-      </p>
-
-      <!-- Launchpad d'actions rapides -->
-      <div class="hero-actions">
-        <button class="hero-btn-primary" onclick="goTo('report')">
-          <span>📑</span>
-          <span>Générer le Rapport d'Audit PDF</span>
-        </button>
-        <button class="hero-btn-secondary" onclick="goTo('headers')">
-          <span>📋</span>
-          <span>Audit Web & Headers</span>
-        </button>
-        <button class="hero-btn-secondary" onclick="goTo('sqli')">
-          <span>🛡️</span>
-          <span>Injections SQL</span>
-        </button>
-        <button class="hero-btn-secondary" onclick="goTo('nmap')">
-          <span>🌐</span>
-          <span>Scan Réseau & Burp</span>
-        </button>
-        <button class="hero-btn-secondary" onclick="goTo('iso27001')">
-          <span>📜</span>
-          <span>Matrice ISO 27001</span>
-        </button>
-        <button class="hero-btn-secondary" onclick="goTo('certifications')">
-          <span>🎓</span>
-          <span>Simulateur QCM CISA</span>
-        </button>
-      </div>
-
-      <!-- Métriques d'Impact Clés -->
-      <div class="hero-stats-grid">
-        <div class="hero-stat-card">
-          <div class="hero-stat-num" style="color:#60a5fa">15+</div>
-          <div class="hero-stat-lbl">Outils & Simulateurs Cyber intégrés</div>
-        </div>
-        <div class="hero-stat-card">
-          <div class="hero-stat-num" style="color:#2dd4bf">4 Piliers</div>
-          <div class="hero-stat-lbl">Web, Réseau, BDD, Gouvernance & SMSI</div>
-        </div>
-        <div class="hero-stat-card">
-          <div class="hero-stat-num" style="color:#34d399">100% PWA</div>
-          <div class="hero-stat-lbl">Expérience fluide sur Mobile & Bureau</div>
-        </div>
-        <div class="hero-stat-card">
-          <div class="hero-stat-num" style="color:#f59e0b">PDF A4</div>
-          <div class="hero-stat-lbl">Restitution d'audit conforme & téléchargeable</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- MÉTHODOLOGIE D'UNE MISSION D'AUDIT IT EN 4 PHASES -->
-    <div class="card-title" style="margin-bottom:12px">MÉTHODOLOGIE D'UNE MISSION D'AUDIT IT (DÉROULEMENT OPÉRATIONNEL)</div>
-    <div class="methodology-track">
-      <div class="method-step" onclick="goTo('headers')">
-        <div class="step-idx">PHASE 01</div>
-        <div class="step-title">🌐 Cadrage & Reconnaissance</div>
-        <div class="step-desc">Audit des en-têtes HTTP, ports ouverts, certificats SSL et cartographie Nmap / Burp Suite.</div>
-      </div>
-      <div class="method-step" onclick="goTo('sqli')">
-        <div class="step-idx">PHASE 02</div>
-        <div class="step-title">🛠️ Audit Technique Approfondi</div>
-        <div class="step-desc">Détection d'injections SQL, revue de code SAST (C, JS, Python, Bash) et durcissement CIS BDD.</div>
-      </div>
-      <div class="method-step" onclick="goTo('iso27001')">
-        <div class="step-idx">PHASE 03</div>
-        <div class="step-title">⚖️ Gouvernance & Analyse Risques</div>
-        <div class="step-desc">Évaluation SMSI ISO 27001, maturité CMMI COBIT/ITIL et ateliers ANSSI EBIOS RM.</div>
-      </div>
-      <div class="method-step" onclick="goTo('report')">
-        <div class="step-idx">PHASE 04</div>
-        <div class="step-title">📑 Restitution & Rapport PDF</div>
-        <div class="step-desc">Consolidation de tous les constats, feuille de route P0/P1/P2 et livrable PDF officiel.</div>
       </div>
     </div>
 
@@ -2760,11 +3412,35 @@
   </button>
 </nav>
 
+</div><!-- ══════════ FIN APPLICATION DASHBOARD ══════════ -->
+
 <!-- ══════════ JAVASCRIPT ══════════ -->
 <script>
 /* ── Navigation & Adaptabilité Mobile/Web ─────── */
+function enterDashboard(targetPanel = 'home') {
+  const landing = document.getElementById("landing-page");
+  const dash = document.getElementById("dashboard-app");
+  if (landing) landing.style.display = "none";
+  if (dash) dash.style.display = "flex";
+  document.body.classList.remove("on-landing");
+  window.location.hash = "#dashboard";
+  if (typeof goTo === "function") {
+    goTo(targetPanel);
+  }
+}
+
+function showLandingPage() {
+  const landing = document.getElementById("landing-page");
+  const dash = document.getElementById("dashboard-app");
+  if (dash) dash.style.display = "none";
+  if (landing) landing.style.display = "block";
+  document.body.classList.add("on-landing");
+  window.location.hash = "#presentation";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 const PANEL_LABELS = {
-  home: "Accueil",
+  home: "Accueil Dashboard",
   headers: "Audit Headers",
   sqli: "Injections SQL",
   nmap: "Réseau (Nmap)",
@@ -2801,6 +3477,12 @@ document.addEventListener("keydown", (e) => {
 });
 
 function goTo(panelName) {
+  const dash = document.getElementById("dashboard-app");
+  if (dash && dash.style.display === "none") {
+    enterDashboard(panelName);
+    return;
+  }
+
   document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
   document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
   document.getElementById("panel-" + panelName)?.classList.add("active");
@@ -4933,6 +5615,15 @@ window.addEventListener("DOMContentLoaded", () => {
   initGovernanceSliders();
   initQuiz();
   refreshAuditReportPreview();
+
+  // Routage initial : Afficher la page vitrine dédiée par défaut, ou le dashboard si hash #dashboard
+  const h = (window.location.hash || "").toLowerCase();
+  if (h === "#dashboard" || h.startsWith("#panel-")) {
+    const p = h.replace("#panel-", "").replace("#dashboard", "") || "home";
+    enterDashboard(p || "home");
+  } else {
+    showLandingPage();
+  }
 });
 </script>
 </body>
