@@ -1,0 +1,25 @@
+# Fichiers Python compilés
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+
+# Environnements virtuels
+venv/
+.venv/
+env/
+
+# Variables d'environnement
+.env
+.env.local
+
+# Vercel
+.vercel/
+
+# Éditeurs
+.vscode/
+.idea/
+*.swp
+
+# Fichiers de test temporaires
+scratch/

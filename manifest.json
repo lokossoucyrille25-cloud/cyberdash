@@ -1,0 +1,27 @@
+{
+  "name": "CyberDash — Audit IT & Cybersécurité",
+  "short_name": "CyberDash",
+  "description": "Plateforme d'audit technique et gouvernance des systèmes d'information",
+  "start_url": "/",
+  "id": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#080D1A",
+  "theme_color": "#080D1A",
+  "orientation": "any",
+  "categories": ["utilities", "productivity", "security"],
+  "icons": [
+    {
+      "src": "/static/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
